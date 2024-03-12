@@ -1,0 +1,151 @@
+/*   */
+
+.search__inputs {
+  min-height: 55px;
+  border-radius: 5px;
+  background-color: #ffb700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  z-index: 1;
+}
+
+.search__inputs--form {
+  background: #fff;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  height: 37px;
+  border-radius: 5px;
+  gap: 8px;
+  padding: 10px;
+}
+
+.search__inputs--form span {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.search__inputs--form svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  color: #474747;
+}
+
+.search__inputs--form input {
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.search__inputs--form > input[type="text"] {
+  width: 100%;
+}
+
+.search__inputs--form:nth-child(1),
+.search__inputs--form:nth-child(2),
+.search__inputs--form:nth-child(3) {
+  width: 332px;
+}
+
+.search__inputs--form button {
+  background-color: transparent;
+}
+
+.search__inputs--form:last-child {
+  padding: 11px 4px;
+}
+
+.search__inputs--form:last-child button {
+  background-color: var(--border-color) !important;
+  padding: 13px 24px;
+  transition: all 0.4s;
+  color: var(--primary-color) !important;
+  cursor: pointer;
+  &:hover {
+    color: var(--parimary-secondary) !important;
+    background-color: var(--primary-color) !important;
+  }
+}
+
+.peoples {
+  width: 320px;
+  height: 180px;
+  color: black;
+  box-shadow: 0 2px 16px 0 rgba(26, 26, 26, 0.24);
+  position: absolute;
+  transform: translate(630px, 5px);
+  border-radius: 10px;
+  padding: 30px;
+  background-color: var(--primary-color);
+}
+
+.people__container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.people {
+  display: flex;
+  justify-content: space-between;
+}
+
+.people__button--done {
+  width: 100%;
+  color: var(--border-color);
+  border: 1px solid var(--border-color);
+  background-color: transparent;
+  padding: 7px 0;
+  border-radius: 10px;
+  transition: all 0.5s;
+  margin-top: 1rem;
+  &:hover {
+    background-color: #f1eeee;
+  }
+}
+
+.people__buttons {
+  border: 1px solid #787575;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  width: 115px;
+  height: 35px;
+}
+
+/* date range calculator */
+
+.rdrCalendarWrapper.rdrDateRangeWrapper {
+  box-shadow: 0 2px 16px 0 rgba(26, 26, 26, 0.24);
+  transform: translate(280px, 5px);
+  border-radius: 10px;
+  position: absolute;
+  z-index: 999;
+  width: 500px;
+}
+
+/* responsive */
+@media screen and (max-width: 600px) {
+  .search__inputs {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .rdrCalendarWrapper.rdrDateRangeWrapper {
+    width: 335px;
+    transform: translate(12px, 5px);
+    z-index: 999;
+    position: relative;
+  }
+
+  .peoples {
+    width: 280px;
+    height: 160px;
+    transform: translate(8px, 5px);
+    z-index: 999;
+  }
+}
