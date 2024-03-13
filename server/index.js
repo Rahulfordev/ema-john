@@ -57,8 +57,11 @@ async function accessCollection() {
 
     app.get("/products", async (req, res) => {
       try {
-        const product = await collection.find({}).toArray();
-        res.json(product);
+        const search = req.query.search;
+        const products = await collection
+          .find({ name: { $regex: search } })
+          .toArray();
+        res.json(products);
       } catch (error) {
         console.error("Error fetching data:", error);
         res.status(500).send("Error fetching data");
@@ -106,7 +109,7 @@ async function accessCollection() {
             .then(async (decodedToken) => {
               const tokenEmail = decodedToken.email;
               const queryEmail = req.query.email;
-              // console.log(tokenEmail, queryEmail);
+              console.log(tokenEmail, queryEmail);
               if (tokenEmail === queryEmail) {
                 const bookingData = await bookingCollection
                   .find({ email: queryEmail })

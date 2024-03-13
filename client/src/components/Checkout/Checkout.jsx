@@ -1,11 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../providers/AuthProvider";
 import { deleteShoppingCart, getShoppingCart } from "../../utilities/fakedb";
 import axios from "axios";
+import "./checkout.css";
+import PaymentProcess from "../PaymentProcess/PaymentProcess";
+import InjectedCheckoutForm from "../PaymentProcess/PaymentProcess";
 
 const Checkout = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [shippingData, setShippingData] = useState(null);
   const {
     register,
     handleSubmit,
@@ -13,11 +17,16 @@ const Checkout = () => {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
+    setShippingData(data);
+  };
+
+  const handlePaymentCuccess = (paymentId) => {
     const storedCart = getShoppingCart();
     const orderDetails = {
       ...user,
       products: storedCart,
-      shipment: data,
+      shipment: shippingData,
+      paymentId,
       orderTime: new Date(),
     };
 
@@ -33,41 +42,28 @@ const Checkout = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: "8px",
-      }}
-    >
-      <h2>Checkout your order!!! page </h2>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "8px",
-          width: "300px",
-        }}
-      >
-        <input defaultValue={user.displayName} {...register("name")} />
-        {errors.name && <p>This field is required</p>}
+    <div className="checkout">
+      <div style={{ display: shippingData ? "none" : "block" }}>
+        <h2>Checkout your order!!! page </h2>
+        <form onSubmit={handleSubmit(onSubmit)} className="form">
+          <input {...register("name", { required: true })} />
+          {errors.name && <p>This field is required</p>}
 
-        <input
-          defaultValue={user.email}
-          {...register("email", { required: true })}
-        />
-        {errors.email && <p>This field is required</p>}
+          <input {...register("email", { required: true })} />
+          {errors.email && <p>This field is required</p>}
 
-        <input {...register("address", { required: true })} />
-        {errors.address && <p>This field is required</p>}
+          <input {...register("address", { required: true })} />
+          {errors.address && <p>This field is required</p>}
 
-        <input {...register("number", { required: true })} />
-        {errors.number && <p>This field is required</p>}
+          <input {...register("number", { required: true })} />
+          {errors.number && <p>This field is required</p>}
 
-        <input type="submit" />
-      </form>
+          <input type="submit" />
+        </form>
+      </div>
+      <div style={{ display: shippingData ? "block" : "none" }}>
+        <PaymentProcess handlePayment={handlePaymentCuccess} />
+      </div>
     </div>
   );
 };

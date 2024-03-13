@@ -12,7 +12,8 @@ import useFetch from "../../Hooks/useFetch";
 import SearchHotel from "../SearchHotel/SearchHotel";
 import Booking from "../Booking/Booking";
 const Shop = () => {
-  const { data } = useFetch("http://localhost:3000/products");
+  const [search, setSearch] = useState([]);
+  const { data } = useFetch("http://localhost:3000/products?search=" + search);
   const [products, setProducts] = useState(data);
   const [cart, setCart] = useState([]);
 
@@ -69,10 +70,15 @@ const Shop = () => {
     alert("Please Add to Cart");
   };
 
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
+  };
+
   return (
     <div>
       <SearchHotel />
       <Booking />
+      <input type="text" onBlur={handleSearch} className="product-search" />
       <div className="shop-container">
         <div className="products-container">
           {products ? (
